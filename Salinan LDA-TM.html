@@ -1,0 +1,3512 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Topic Modelling &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Salinan LDA-TM';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Crowling Website" href="Salinan%20CrawlingBoss.html" />
+    <link rel="prev" title="Crawling PTA" href="Salinan%20Crawling%20PTA%2020-175.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Salinan%20Crawling%20PTA%2020-175.html">Crawling PTA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Topic Modelling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Salinan%20CrawlingBoss.html">Crowling Website</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Salinan%20Page%20Range%20dan%20Implementasi%20Github.html"><strong>Pagerank dan Implementasi Github</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Salinan%20UAS.html">UAS PPW</a></li>
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FSalinan LDA-TM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Salinan LDA-TM.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Topic Modelling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="topic-modelling">
+<h1>Topic Modelling<a class="headerlink" href="#topic-modelling" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-1-d5df0069828e&gt;</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/drive.py</span> in <span class="ni">mount</span><span class="nt">(mountpoint, force_remount, timeout_ms, readonly)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">def</span> <span class="nf">mount</span><span class="p">(</span><span class="n">mountpoint</span><span class="p">,</span> <span class="n">force_remount</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="o">=</span><span class="mi">120000</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span><span class="w">   </span><span class="sd">&quot;&quot;&quot;Mount your Google Drive at the specified mountpoint path.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">103</span>   <span class="k">return</span> <span class="n">_mount</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>       <span class="n">mountpoint</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>       <span class="n">force_remount</span><span class="o">=</span><span class="n">force_remount</span><span class="p">,</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/drive.py</span> in <span class="ni">_mount</span><span class="nt">(mountpoint, force_remount, timeout_ms, ephemeral, readonly)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span>   <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>   <span class="k">if</span> <span class="n">ephemeral</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">132</span>     <span class="n">_message</span><span class="o">.</span><span class="n">blocking_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>         <span class="s1">&#39;request_auth&#39;</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;authType&#39;</span><span class="p">:</span> <span class="s1">&#39;dfs_ephemeral&#39;</span><span class="p">},</span> <span class="n">timeout_sec</span><span class="o">=</span><span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>     <span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/_message.py</span> in <span class="ni">blocking_request</span><span class="nt">(request_type, request, timeout_sec, parent)</span>
+<span class="g g-Whitespace">    </span><span class="mi">174</span>       <span class="n">request_type</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">expect_reply</span><span class="o">=</span><span class="kc">True</span>
+<span class="g g-Whitespace">    </span><span class="mi">175</span>   <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">176</span>   <span class="k">return</span> <span class="n">read_reply_from_input</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">timeout_sec</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/google/colab/_message.py</span> in <span class="ni">read_reply_from_input</span><span class="nt">(message_id, timeout_sec)</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span>     <span class="n">reply</span> <span class="o">=</span> <span class="n">_read_next_input_message</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span>     <span class="k">if</span> <span class="n">reply</span> <span class="o">==</span> <span class="n">_NOT_READY</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reply</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">96</span>       <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.025</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>       <span class="k">continue</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="k">if</span> <span class="p">(</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">LatentDirichletAllocation</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TTF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/Aldi-880/dataset-ppw/main/datavcm2.csv&quot;</span><span class="p">)</span>
+<span class="n">TTF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-444a571f-d0a8-4212-a25c-9297a8277c13" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Abstrak</th>
+      <th>00</th>
+      <th>000</th>
+      <th>00001</th>
+      <th>0001</th>
+      <th>000505341</th>
+      <th>000506436</th>
+      <th>000792353</th>
+      <th>00086</th>
+      <th>00089</th>
+      <th>...</th>
+      <th>zara</th>
+      <th>zat</th>
+      <th>zcz</th>
+      <th>zf</th>
+      <th>zona</th>
+      <th>zone</th>
+      <th>zoning</th>
+      <th>zoom</th>
+      <th>zucara</th>
+      <th>zungu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sistem informasi akademik ( siakad ) sistem in...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>berjalannya koneksi jaringan komputer lancar g...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>web server perangkat lunak server berfungsi me...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>penjadwalan kuliah perguruan kompleks . permas...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>seiring perkembangan teknologi didunia , muncu...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>850</th>
+      <td>toko tas deeolshop menjual tas model kekinian ...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>851</th>
+      <td>sepak bola salah olahraga digemari remaja bela...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>852</th>
+      <td>perguruan salah jenjang pendidikan sekolah men...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>853</th>
+      <td>investasi saham memiliki resiko kerugian perge...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>854</th>
+      <td>information retrieval ( ir ) pengambilan infor...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>855 rows × 8878 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-444a571f-d0a8-4212-a25c-9297a8277c13')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-444a571f-d0a8-4212-a25c-9297a8277c13 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-444a571f-d0a8-4212-a25c-9297a8277c13');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-4e5e4472-0596-4aa4-a734-fb74c16e7e2f">
+  <button class="colab-df-quickchart" onclick="quickchart('df-4e5e4472-0596-4aa4-a734-fb74c16e7e2f')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-4e5e4472-0596-4aa4-a734-fb74c16e7e2f button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/Aldi-880/dataset-ppw/main/datavcm2.csv&quot;</span><span class="p">)</span>
+<span class="n">TF</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-80ae0cee-27bb-48cd-90ce-16b18135c808" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Abstrak</th>
+      <th>00</th>
+      <th>000</th>
+      <th>00001</th>
+      <th>0001</th>
+      <th>000505341</th>
+      <th>000506436</th>
+      <th>000792353</th>
+      <th>00086</th>
+      <th>00089</th>
+      <th>...</th>
+      <th>zara</th>
+      <th>zat</th>
+      <th>zcz</th>
+      <th>zf</th>
+      <th>zona</th>
+      <th>zone</th>
+      <th>zoning</th>
+      <th>zoom</th>
+      <th>zucara</th>
+      <th>zungu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sistem informasi akademik ( siakad ) sistem in...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>berjalannya koneksi jaringan komputer lancar g...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>web server perangkat lunak server berfungsi me...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>penjadwalan kuliah perguruan kompleks . permas...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>seiring perkembangan teknologi didunia , muncu...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>850</th>
+      <td>toko tas deeolshop menjual tas model kekinian ...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>851</th>
+      <td>sepak bola salah olahraga digemari remaja bela...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>852</th>
+      <td>perguruan salah jenjang pendidikan sekolah men...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>853</th>
+      <td>investasi saham memiliki resiko kerugian perge...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>854</th>
+      <td>information retrieval ( ir ) pengambilan infor...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>855 rows × 8878 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-80ae0cee-27bb-48cd-90ce-16b18135c808')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-80ae0cee-27bb-48cd-90ce-16b18135c808 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-80ae0cee-27bb-48cd-90ce-16b18135c808');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-7f280941-ccb4-4516-a2e1-d40338ad144b">
+  <button class="colab-df-quickchart" onclick="quickchart('df-7f280941-ccb4-4516-a2e1-d40338ad144b')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-7f280941-ccb4-4516-a2e1-d40338ad144b button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#jumlah topik, parameter topik dalam satu dokumen, parameter dalam setiap kata ke dalam satu topik, parameter nilai acak, terasi dalam lda</span>
+<span class="n">lda</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">doc_topic_prior</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">topic_word_prior</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">lda_top</span><span class="o">=</span><span class="n">lda</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">TF</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-72-f205ebebc65c&gt;</span> in <span class="ni">&lt;cell line: 3&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1">#jumlah topik, parameter topik dalam satu dokumen, parameter dalam setiap kata ke dalam satu topik, parameter nilai acak, terasi dalam lda</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">lda</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">doc_topic_prior</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">topic_word_prior</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">lda_top</span><span class="o">=</span><span class="n">lda</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">TF</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/utils/_set_output.py</span> in <span class="ni">wrapped</span><span class="nt">(self, X, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span>     <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">140</span>         <span class="n">data_to_wrap</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">141</span>         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_to_wrap</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span>             <span class="c1"># only wrap the first output for cross decomposition</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/base.py</span> in <span class="ni">fit_transform</span><span class="nt">(self, X, y, **fit_params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">876</span>         <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="c1"># fit method of arity 1 (unsupervised transformation)</span>
+<span class="ne">--&gt; </span><span class="mi">878</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">880</span>             <span class="c1"># fit method of arity 2 (supervised transformation)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/decomposition/_lda.py</span> in <span class="ni">fit</span><span class="nt">(self, X, y)</span>
+<span class="g g-Whitespace">    </span><span class="mi">639</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">640</span><span class="s2">         self._validate_params()</span>
+<span class="ne">--&gt; </span><span class="mi">641</span><span class="s2">         X = self._check_non_neg_array(</span>
+<span class="g g-Whitespace">    </span><span class="mi">642</span><span class="s2">             X, reset_n_features=True, whom=&quot;LatentDirichletAllocation.fit&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">643</span><span class="s2">         )</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/decomposition/_lda.py</span> in <span class="ni">_check_non_neg_array</span><span class="nt">(self, X, reset_n_features, whom)</span>
+<span class="g g-Whitespace">    </span><span class="mi">559</span><span class="s2">         dtype = [np.float64, np.float32] if reset_n_features else self.components_.dtype</span>
+<span class="g g-Whitespace">    </span><span class="mi">560</span><span class="s2"> </span>
+<span class="ne">--&gt; </span><span class="mi">561</span><span class="s2">         X = self._validate_data(</span>
+<span class="g g-Whitespace">    </span><span class="mi">562</span><span class="s2">             X,</span>
+<span class="g g-Whitespace">    </span><span class="mi">563</span><span class="s2">             reset=reset_n_features,</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/base.py</span> in <span class="ni">_validate_data</span><span class="nt">(self, X, y, reset, validate_separately, **check_params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">563</span><span class="s2">             raise ValueError(&quot;Validation should be done on X, y or both.&quot;)</span>
+<span class="g g-Whitespace">    </span><span class="mi">564</span><span class="s2">         elif not no_val_X and no_val_y:</span>
+<span class="ne">--&gt; </span><span class="mi">565</span><span class="s2">             X = check_array(X, input_name=&quot;X&quot;, **check_params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">566</span><span class="s2">             out = X</span>
+<span class="g g-Whitespace">    </span><span class="mi">567</span><span class="s2">         elif no_val_X and not no_val_y:</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/utils/validation.py</span> in <span class="ni">check_array</span><span class="nt">(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator, input_name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">877</span><span class="s2">                     array = xp.astype(array, dtype, copy=False)</span>
+<span class="g g-Whitespace">    </span><span class="mi">878</span><span class="s2">                 else:</span>
+<span class="ne">--&gt; </span><span class="mi">879</span><span class="s2">                     array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)</span>
+<span class="g g-Whitespace">    </span><span class="mi">880</span><span class="s2">             except ComplexWarning as complex_warning:</span>
+<span class="g g-Whitespace">    </span><span class="mi">881</span><span class="s2">                 raise ValueError(</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/sklearn/utils/_array_api.py</span> in <span class="ni">_asarray_with_order</span><span class="nt">(array, dtype, order, copy, xp)</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span><span class="s2">     if xp.__name__ in {&quot;numpy&quot;, &quot;numpy.array_api&quot;}:</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span><span class="s2">         # Use NumPy API to support order</span>
+<span class="ne">--&gt; </span><span class="mi">185</span><span class="s2">         array = numpy.asarray(array, order=order, dtype=dtype)</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span><span class="s2">         return xp.asarray(array, copy=copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span><span class="s2">     else:</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/core/generic.py</span> in <span class="ni">__array__</span><span class="nt">(self, dtype)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2068</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">2069</span><span class="s2">     def __array__(self, dtype: npt.DTypeLike | None = None) -&gt; np.ndarray:</span>
+<span class="ne">-&gt; </span><span class="mi">2070</span><span class="s2">         return np.asarray(self._values, dtype=dtype)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2071</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">2072</span><span class="s2">     def __array_wrap__(</span>
+
+<span class="ne">ValueError</span>: could not convert string to float: &#39;sistem informasi akademik ( siakad ) sistem informasi berfungsi menangani pengelolaan penyajian data-data akademik , fakultas siakad dianggap pelayanan mahasiswa membutuhkan informasi akademik . universitas trunojoyo tersedia siakad , database terpusat . sistem kelebihan perawatannya mudah membutuhkan biaya , sistem berpotensi mengahadapi kendala-kendala proses transaksi data padatnya jaringan database siakad , kelambatan pemrosesan respon query data tersimpan pemrosesan kompleks , memiliki kelemahan ketersediaan data . sistem pengembangan sistem database sistem databases terdistribusi fakultas dijadikan solusi permasalahan . basisdata terdistribusi keuntungan dimiliki basisdata terpusat pengawasan distribusi , reability , availability , kecepatan pemrosesan query otonomi local&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">judul</span> <span class="o">=</span> <span class="n">TTF</span><span class="p">[</span><span class="s2">&quot;Judul&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3801</span>             <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3802</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3803</span>             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/_libs/index.pyx</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;Judul&#39;
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-69-02ad2da4355a&gt;</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">judul</span> <span class="o">=</span> <span class="n">TTF</span><span class="p">[</span><span class="s2">&quot;Judul&quot;</span><span class="p">]</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/core/frame.py</span> in <span class="ni">__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3805</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3806</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3807</span>             <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3808</span>             <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3809</span>                 <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/pandas/core/indexes/base.py</span> in <span class="ni">get_loc</span><span class="nt">(self, key, method, tolerance)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3802</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3803</span>             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3804</span>                 <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3805</span>             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3806</span>                 <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+
+<span class="ne">KeyError</span>: &#39;Judul&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lda_top</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (no_of_doc,no_of_topics)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda_top</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(913, 6)
+[[2.03723787e-03 8.31468379e-01 2.03203910e-03 2.02417350e-03
+  2.03018241e-03 1.60407988e-01]
+ [9.92610737e-01 1.47521535e-03 1.47280701e-03 1.48758909e-03
+  1.47831438e-03 1.47533741e-03]
+ [1.96152539e-03 1.96987630e-03 1.26687770e-01 1.95832418e-03
+  2.44114074e-01 6.23308430e-01]
+ ...
+ [1.04315353e-01 9.75769870e-04 9.67616817e-04 8.91797942e-01
+  9.74127225e-04 9.69191587e-04]
+ [2.19489761e-03 9.89039394e-01 2.17645030e-03 2.19895241e-03
+  2.21124968e-03 2.17905619e-03]
+ [1.98376785e-01 1.70366010e-03 7.94808393e-01 1.71259487e-03
+  1.70419639e-03 1.69437053e-03]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#bobot setiap topik terhadap dokumen</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">lda_top</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Topik 1&#39;</span><span class="p">,</span><span class="s1">&#39;Topik 2&#39;</span><span class="p">,</span><span class="s1">&#39;Topik 3&#39;</span><span class="p">,</span><span class="s1">&#39;Topik 4&#39;</span><span class="p">,</span><span class="s1">&#39;Topik 5&#39;</span><span class="p">,</span><span class="s1">&#39;Topik 6&#39;</span><span class="p">])</span>
+<span class="n">U</span><span class="p">[</span><span class="s2">&quot;Judul&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">judul</span>
+<span class="n">U</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-b091543e-288d-4ffd-97f3-51c1e83c935a" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Topik 1</th>
+      <th>Topik 2</th>
+      <th>Topik 3</th>
+      <th>Topik 4</th>
+      <th>Topik 5</th>
+      <th>Topik 6</th>
+      <th>Judul</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.002037</td>
+      <td>0.831468</td>
+      <td>0.002032</td>
+      <td>0.002024</td>
+      <td>0.002030</td>
+      <td>0.160408</td>
+      <td>Pengaruh Penggunaan Media Audio Visual Terhada...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.992611</td>
+      <td>0.001475</td>
+      <td>0.001473</td>
+      <td>0.001488</td>
+      <td>0.001478</td>
+      <td>0.001475</td>
+      <td>Strategi Sekolah dalam Upaya Penguatan Karakte...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001962</td>
+      <td>0.001970</td>
+      <td>0.126688</td>
+      <td>0.001958</td>
+      <td>0.244114</td>
+      <td>0.623308</td>
+      <td>Perbandingan Hasil Belajar Cooperative Learnin...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.002254</td>
+      <td>0.002248</td>
+      <td>0.002256</td>
+      <td>0.988723</td>
+      <td>0.002265</td>
+      <td>0.002255</td>
+      <td>Kemampuan Berpikir Tingkat Tinggi Siswa Kelas ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.002622</td>
+      <td>0.002632</td>
+      <td>0.002621</td>
+      <td>0.002611</td>
+      <td>0.986891</td>
+      <td>0.002623</td>
+      <td>Hubungan Antara Kemandirian Belajar dengan Has...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>908</th>
+      <td>0.001500</td>
+      <td>0.001508</td>
+      <td>0.992473</td>
+      <td>0.001497</td>
+      <td>0.001508</td>
+      <td>0.001514</td>
+      <td>PENGEMBANGAN MAJALAH BERBASIS GAME MOBILE LEGE...</td>
+    </tr>
+    <tr>
+      <th>909</th>
+      <td>0.001842</td>
+      <td>0.001857</td>
+      <td>0.371237</td>
+      <td>0.001850</td>
+      <td>0.001865</td>
+      <td>0.621350</td>
+      <td>PENGEMBANGAN PERANGKAT PEMBELAJARAN MODEL\nPRO...</td>
+    </tr>
+    <tr>
+      <th>910</th>
+      <td>0.104315</td>
+      <td>0.000976</td>
+      <td>0.000968</td>
+      <td>0.891798</td>
+      <td>0.000974</td>
+      <td>0.000969</td>
+      <td>Problematika Pembelajaran Daring Siswa Kelas R...</td>
+    </tr>
+    <tr>
+      <th>911</th>
+      <td>0.002195</td>
+      <td>0.989039</td>
+      <td>0.002176</td>
+      <td>0.002199</td>
+      <td>0.002211</td>
+      <td>0.002179</td>
+      <td>PENDAMPINGAN ORANG TUA DALAM PROSES BELAJAR AN...</td>
+    </tr>
+    <tr>
+      <th>912</th>
+      <td>0.198377</td>
+      <td>0.001704</td>
+      <td>0.794808</td>
+      <td>0.001713</td>
+      <td>0.001704</td>
+      <td>0.001694</td>
+      <td>peran Guru Dalam Menanamkan NIlai-Nilai Kearif...</td>
+    </tr>
+  </tbody>
+</table>
+<p>913 rows × 7 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-b091543e-288d-4ffd-97f3-51c1e83c935a')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-b091543e-288d-4ffd-97f3-51c1e83c935a button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-b091543e-288d-4ffd-97f3-51c1e83c935a');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-fe8a8c28-6d3f-49ae-bcd5-808c31cef20e">
+  <button class="colab-df-quickchart" onclick="quickchart('df-fe8a8c28-6d3f-49ae-bcd5-808c31cef20e')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-fe8a8c28-6d3f-49ae-bcd5-808c31cef20e button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">lda</span><span class="o">.</span><span class="n">components_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (no_of_topics*no_of_words)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1.74965067 0.10016838 0.30439954 ... 2.0995227  0.50261065 0.10002677]
+ [0.10008741 0.10017835 0.10004379 ... 0.10008527 0.10004793 0.10002111]
+ [0.10007482 0.72748317 0.10004262 ... 0.10010243 0.10071593 1.09987745]
+ [0.10008324 2.0743115  0.68261422 ... 0.10009469 0.10005535 0.10002302]
+ [0.10007374 0.10016419 0.31284154 ... 0.10010392 0.23112056 0.10002223]
+ [0.45003012 0.49769442 0.10005829 ... 0.10009099 0.56544958 0.10002941]]
+(6, 4394)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#bobot setiap kata terhadap topik</span>
+<span class="n">label</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="n">lda</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
+  <span class="n">masukan</span> <span class="o">=</span> <span class="n">TF</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">masukan</span><span class="p">)</span>
+<span class="n">VT_tabel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">lda</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">VT_tabel</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&quot;Topik 1&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s2">&quot;Topik 2&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s2">&quot;Topik 3&quot;</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="s2">&quot;Topik 4&quot;</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="s2">&quot;Topik 5&quot;</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="s2">&quot;Topik 6&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-f1501c46-f1aa-4c45-bebf-87a662d5debf" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Topik 1</th>
+      <th>Topik 2</th>
+      <th>Topik 3</th>
+      <th>Topik 4</th>
+      <th>Topik 5</th>
+      <th>Topik 6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ab</th>
+      <td>1.749651</td>
+      <td>0.100087</td>
+      <td>0.100075</td>
+      <td>0.100083</td>
+      <td>0.100074</td>
+      <td>0.450030</td>
+    </tr>
+    <tr>
+      <th>abad</th>
+      <td>0.100168</td>
+      <td>0.100178</td>
+      <td>0.727483</td>
+      <td>2.074311</td>
+      <td>0.100164</td>
+      <td>0.497694</td>
+    </tr>
+    <tr>
+      <th>abai</th>
+      <td>0.304400</td>
+      <td>0.100044</td>
+      <td>0.100043</td>
+      <td>0.682614</td>
+      <td>0.312842</td>
+      <td>0.100058</td>
+    </tr>
+    <tr>
+      <th>abar</th>
+      <td>0.100179</td>
+      <td>0.100194</td>
+      <td>0.100214</td>
+      <td>0.100182</td>
+      <td>0.730733</td>
+      <td>5.468498</td>
+    </tr>
+    <tr>
+      <th>abd</th>
+      <td>0.100057</td>
+      <td>0.171600</td>
+      <td>0.213376</td>
+      <td>0.100039</td>
+      <td>0.852327</td>
+      <td>0.162601</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>zholam</th>
+      <td>0.130634</td>
+      <td>0.100039</td>
+      <td>0.100034</td>
+      <td>0.100049</td>
+      <td>0.410653</td>
+      <td>0.758591</td>
+    </tr>
+    <tr>
+      <th>zn</th>
+      <td>0.100089</td>
+      <td>0.781593</td>
+      <td>0.100078</td>
+      <td>0.100077</td>
+      <td>0.418054</td>
+      <td>0.100110</td>
+    </tr>
+    <tr>
+      <th>zr</th>
+      <td>2.099523</td>
+      <td>0.100085</td>
+      <td>0.100102</td>
+      <td>0.100095</td>
+      <td>0.100104</td>
+      <td>0.100091</td>
+    </tr>
+    <tr>
+      <th>ztabel</th>
+      <td>0.502611</td>
+      <td>0.100048</td>
+      <td>0.100716</td>
+      <td>0.100055</td>
+      <td>0.231121</td>
+      <td>0.565450</td>
+    </tr>
+    <tr>
+      <th>zulfa</th>
+      <td>0.100027</td>
+      <td>0.100021</td>
+      <td>1.099877</td>
+      <td>0.100023</td>
+      <td>0.100022</td>
+      <td>0.100029</td>
+    </tr>
+  </tbody>
+</table>
+<p>4394 rows × 6 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f1501c46-f1aa-4c45-bebf-87a662d5debf')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-f1501c46-f1aa-4c45-bebf-87a662d5debf button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f1501c46-f1aa-4c45-bebf-87a662d5debf');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-4e93b09f-25d8-4d05-bf10-fa61d30d76f3">
+  <button class="colab-df-quickchart" onclick="quickchart('df-4e93b09f-25d8-4d05-bf10-fa61d30d76f3')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-4e93b09f-25d8-4d05-bf10-fa61d30d76f3 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lda_top</span><span class="p">)</span>
+<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Dokumen&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">)),</span> <span class="s1">&#39;Cluster&#39;</span><span class="p">:</span> <span class="n">cluster_labels</span><span class="p">}</span>
+<span class="n">duf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="c1">#  df</span>
+<span class="n">CL</span> <span class="o">=</span> <span class="n">duf</span><span class="p">[</span><span class="s2">&quot;Cluster&quot;</span><span class="p">]</span>
+<span class="n">CL</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      1
+1      1
+2      1
+3      1
+4      1
+      ..
+908    0
+909    1
+910    1
+911    1
+912    0
+Name: Cluster, Length: 913, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#bobot setiap topik terhadap dokumen</span>
+<span class="n">U</span><span class="p">[</span><span class="s2">&quot;Clustering&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_labels</span>
+<span class="n">U</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-5b774501-db48-4d3b-b0a1-10262e492e23" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Topik 1</th>
+      <th>Topik 2</th>
+      <th>Topik 3</th>
+      <th>Topik 4</th>
+      <th>Topik 5</th>
+      <th>Topik 6</th>
+      <th>Judul</th>
+      <th>Clustering</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.002037</td>
+      <td>0.831468</td>
+      <td>0.002032</td>
+      <td>0.002024</td>
+      <td>0.002030</td>
+      <td>0.160408</td>
+      <td>Pengaruh Penggunaan Media Audio Visual Terhada...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.992611</td>
+      <td>0.001475</td>
+      <td>0.001473</td>
+      <td>0.001488</td>
+      <td>0.001478</td>
+      <td>0.001475</td>
+      <td>Strategi Sekolah dalam Upaya Penguatan Karakte...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001962</td>
+      <td>0.001970</td>
+      <td>0.126688</td>
+      <td>0.001958</td>
+      <td>0.244114</td>
+      <td>0.623308</td>
+      <td>Perbandingan Hasil Belajar Cooperative Learnin...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.002254</td>
+      <td>0.002248</td>
+      <td>0.002256</td>
+      <td>0.988723</td>
+      <td>0.002265</td>
+      <td>0.002255</td>
+      <td>Kemampuan Berpikir Tingkat Tinggi Siswa Kelas ...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.002622</td>
+      <td>0.002632</td>
+      <td>0.002621</td>
+      <td>0.002611</td>
+      <td>0.986891</td>
+      <td>0.002623</td>
+      <td>Hubungan Antara Kemandirian Belajar dengan Has...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>908</th>
+      <td>0.001500</td>
+      <td>0.001508</td>
+      <td>0.992473</td>
+      <td>0.001497</td>
+      <td>0.001508</td>
+      <td>0.001514</td>
+      <td>PENGEMBANGAN MAJALAH BERBASIS GAME MOBILE LEGE...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>909</th>
+      <td>0.001842</td>
+      <td>0.001857</td>
+      <td>0.371237</td>
+      <td>0.001850</td>
+      <td>0.001865</td>
+      <td>0.621350</td>
+      <td>PENGEMBANGAN PERANGKAT PEMBELAJARAN MODEL\nPRO...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>910</th>
+      <td>0.104315</td>
+      <td>0.000976</td>
+      <td>0.000968</td>
+      <td>0.891798</td>
+      <td>0.000974</td>
+      <td>0.000969</td>
+      <td>Problematika Pembelajaran Daring Siswa Kelas R...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>911</th>
+      <td>0.002195</td>
+      <td>0.989039</td>
+      <td>0.002176</td>
+      <td>0.002199</td>
+      <td>0.002211</td>
+      <td>0.002179</td>
+      <td>PENDAMPINGAN ORANG TUA DALAM PROSES BELAJAR AN...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>912</th>
+      <td>0.198377</td>
+      <td>0.001704</td>
+      <td>0.794808</td>
+      <td>0.001713</td>
+      <td>0.001704</td>
+      <td>0.001694</td>
+      <td>peran Guru Dalam Menanamkan NIlai-Nilai Kearif...</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>913 rows × 8 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-5b774501-db48-4d3b-b0a1-10262e492e23')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-5b774501-db48-4d3b-b0a1-10262e492e23 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-5b774501-db48-4d3b-b0a1-10262e492e23');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-c40eafd7-e6d8-45bb-97e4-d7c118acbd6e">
+  <button class="colab-df-quickchart" onclick="quickchart('df-c40eafd7-e6d8-45bb-97e4-d7c118acbd6e')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-c40eafd7-e6d8-45bb-97e4-d7c118acbd6e button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clus0</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">U</span><span class="p">[</span><span class="s1">&#39;Clustering&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][[</span><span class="s1">&#39;Judul&#39;</span><span class="p">,</span> <span class="s1">&#39;Clustering&#39;</span><span class="p">]]</span>
+<span class="n">clus0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-46e24227-295a-4e58-8c5e-e0598bfad959" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Judul</th>
+      <th>Clustering</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>PERBANDINGAN HASIL BELAJAR IPA DENGAN MODEL QU...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>KOMPARASI PRESTASI BELAJAR SISWA ANTARA MODEL ...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>PENGARUH MODEL QUANTUM TEACHING TEKNIK TANDUR ...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>PENGARUH PEMBELAJARAN BERBASIS NILAI DENGAN ME...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>PERBANDINGAN MODEL PEMBELAJARAN KOOPERATIF TIP...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>900</th>
+      <td>PENGEMBANGAN MEDIA GAMBAR BERSERI BERBASIS KEA...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>903</th>
+      <td>PENGEMBANGAN PERANGKAT PEMBELAJARAN MATEMATIKA...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>905</th>
+      <td>PENGEMBANGAN MEDIA PEMBELAJARAN PETI âPETA I...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>908</th>
+      <td>PENGEMBANGAN MAJALAH BERBASIS GAME MOBILE LEGE...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>912</th>
+      <td>peran Guru Dalam Menanamkan NIlai-Nilai Kearif...</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>236 rows × 2 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-46e24227-295a-4e58-8c5e-e0598bfad959')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-46e24227-295a-4e58-8c5e-e0598bfad959 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-46e24227-295a-4e58-8c5e-e0598bfad959');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-53c03b20-4fd1-4a2a-acd5-c9277f91748f">
+  <button class="colab-df-quickchart" onclick="quickchart('df-53c03b20-4fd1-4a2a-acd5-c9277f91748f')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-53c03b20-4fd1-4a2a-acd5-c9277f91748f button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clus1</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">U</span><span class="p">[</span><span class="s1">&#39;Clustering&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][[</span><span class="s1">&#39;Judul&#39;</span><span class="p">,</span> <span class="s1">&#39;Clustering&#39;</span><span class="p">]]</span>
+<span class="n">clus1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-0e1b4364-b642-4d3e-b20e-0fb538d68c6f" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Judul</th>
+      <th>Clustering</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Pengaruh Penggunaan Media Audio Visual Terhada...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Strategi Sekolah dalam Upaya Penguatan Karakte...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Perbandingan Hasil Belajar Cooperative Learnin...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Kemampuan Berpikir Tingkat Tinggi Siswa Kelas ...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hubungan Antara Kemandirian Belajar dengan Has...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>906</th>
+      <td>ANALISIS FAKTOR-FAKTOR YANG MEMPENGARUHI HASIL...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>907</th>
+      <td>PENANGANAN SISWA DISLEKSIA DENGAN METODE FERNA...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>909</th>
+      <td>PENGEMBANGAN PERANGKAT PEMBELAJARAN MODEL\nPRO...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>910</th>
+      <td>Problematika Pembelajaran Daring Siswa Kelas R...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>911</th>
+      <td>PENDAMPINGAN ORANG TUA DALAM PROSES BELAJAR AN...</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>677 rows × 2 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-0e1b4364-b642-4d3e-b20e-0fb538d68c6f')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-0e1b4364-b642-4d3e-b20e-0fb538d68c6f button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-0e1b4364-b642-4d3e-b20e-0fb538d68c6f');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-a2eac4b3-55d7-46d1-bb3a-8587e0d2a5b2">
+  <button class="colab-df-quickchart" onclick="quickchart('df-a2eac4b3-55d7-46d1-bb3a-8587e0d2a5b2')"
+            title="Suggest charts."
+            style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+     width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-a2eac4b3-55d7-46d1-bb3a-8587e0d2a5b2 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+    </div>
+  </div>
+</div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Salinan%20Crawling%20PTA%2020-175.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Crawling PTA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Salinan%20CrawlingBoss.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Crowling Website</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
